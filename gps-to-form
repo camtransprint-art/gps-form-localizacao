@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Capturar Localização</title>
+  <script>
+    function sendLocationToForm() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          const locationString = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+
+          const formBase = "https://docs.google.com/forms/d/e/1FAIpQLSehqV9qHbzWAcfg9BcRsaeOH7nLBzrMRGOuHPZ0WgFkYD7zug/viewform";
+          const entryID = "entry.583423081";
+          const redirectUrl = `${formBase}?${entryID}=${encodeURIComponent(locationString)}`;
+
+          window.location.href = redirectUrl;
+        }, function(error) {
+          alert("Não foi possível obter sua localização. Por favor, permita o acesso ao GPS.");
+        });
+      } else {
+        alert("Seu navegador não suporta geolocalização.");
+      }
+    }
+  </script>
+</head>
+<body onload="sendLocationToForm()">
+  <h2>Capturando sua localização atual...</h2>
+  <p>Aguarde. Você será redirecionado para o formulário.</p>
+</body>
+</html>
